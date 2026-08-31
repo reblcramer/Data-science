@@ -42,6 +42,7 @@ Get help on the built-in `rnorm` function.
 
 ```{r rnorm-help, eval=FALSE}
 ## Your code here
+?rnorm
 ```
 
 ## (Not) Executing functions
@@ -61,6 +62,7 @@ Show the source code for `lm`.
 
 ```{r rnorm-source}
 ## Your code here
+lm
 ```
 
 ## Executing functions (for real)
@@ -102,8 +104,14 @@ The best way to figure out what arguments a function requires is to *read its do
 *Nerdy aside*: Computer scientists draw a distinction between "parameters" and "arguments"---there's a [Wikipedia article](https://en.wikipedia.org/wiki/Parameter_(computer_programming)) about this.
 
 ### __q3__ Read the docs
+number of observations or vector length, mean vector, standard deviation vector
 
 Using either the documentation or the source, determine the arguments for `rnorm`.
+```{r}
+rnorm
+
+```
+
 
 
 ### __q4__ Call the function
@@ -111,7 +119,7 @@ Using either the documentation or the source, determine the arguments for `rnorm
 Using what you learned in q3, generate a random sample of size `n = 10` using `rnorm`.
 
 ```{r}
-## Write your code here
+rnorm(10,mean=0, sd=1)
 ```
 
 ## Adapting examples
@@ -130,7 +138,12 @@ Look up the documentation for the function `tribble`, and figure out how to crea
 *Hint*: Adapt an example!
 
 ```{r}
-## Write your code here
+?tribble
+tribble(
+  ~u, ~w,
+  1,   2,
+  3,   4,
+)
 ```
 
 
