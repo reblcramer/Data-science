@@ -31,6 +31,7 @@ associated with `"dplyr"`. What vignettes are available?
 
 ```{r q1-task, eval=FALSE}
 ## TODO: Re-write the code above following the tidyverse style guide
+vignette(package = "dplyr")
 ```
 
 
@@ -46,8 +47,9 @@ only those rows of the `iris` dataset where `Species == "setosa"`.
 ```{r q2-task}
 iris %>%
   as_tibble() %>%
-  filter(
+  filter(Species=="setosa"
     # TODO: Filter on Species "setosa"
+    
   )
 ```
 
@@ -61,6 +63,7 @@ specific function?
 Sometimes we'll be working with a function, but we won't *quite* know how to get
 it to do what we need. In this case, consulting the function's documentation can
 be *extremely* helpful.
+?
 
 ### __q4__ Use your knowledge of documentation lookup to answer the following
 question: How could we `filter` the `iris` dataset to return only those rows
@@ -68,6 +71,13 @@ with `Sepal.Length` between `5.1` and `6.4`?
 
 ```{r q3-task}
 ## TODO: Consult the docs; Write your code here
+iris %>%
+  as_tibble() %>%
+  filter(between(Sepal.Length,5.1,6.4)
+    # TODO: Filter on Species "setosa"
+    
+  )
+
 ```
 
 
@@ -78,10 +88,10 @@ learn more.
 
 ### __q5__ Look up the documentation on `cut_number`; what package does it come
 from? What about `parse_number()`? What about `row_number()`?
+```{r}
+?cut_number
+```
 
 
-<!-- include-exit-ticket -->
-# Exit Ticket
-<!-- -------------------------------------------------- -->
 
-Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-setup03-docs-assignment.Rmd).
+
