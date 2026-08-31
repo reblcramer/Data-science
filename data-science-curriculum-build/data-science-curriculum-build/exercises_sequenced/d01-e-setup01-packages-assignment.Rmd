@@ -26,13 +26,21 @@ knitr::opts_chunk$set(echo = TRUE)
 In [RStudio](https://bookdown.org/yihui/rmarkdown/r-code.html) use the shortcut
 `Ctrl + Alt + I` (`Cmd + Option + I` on Mac). Type the command
 `library(tidyverse`).
+```{r}
+library(`tidyverse`)
+```
+
 
 
 Make sure to load packages at the *beginning* of your notebooks! This is a
 best-practice.
 
 ### __q2__ Run the chunk with `library(tidyverse)`. What packages are loaded?
-
+✔ dplyr     1.2.1     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.2     
 In
 [RStudio](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts)
 press `Ctrl + Alt + T` (`Cmd + Option + T` on Mac) to run the code chunk at your
@@ -40,7 +48,7 @@ cursor.
 
 
 ### __q3__ What are the main differences between `install.packages()` and `library()`? How often do you need to call each one?
-
+  install needs to be called only once per package to save them, library loads pre saved packages and needs to be called for every file
 
 <!-- include-exit-ticket -->
 # Exit Ticket
