@@ -34,6 +34,8 @@ summarize(group_by(diamonds, cut), mean_price = mean(price))
 
 ```{r q1-solution}
 ## TODO: Re-write the code above following the tidyverse style guide
+group_by(diamonds, cut) %>%
+  summarize(mean_price=mean(price))
 ```
 
 ### __q2__ Re-write according to the style guide
@@ -53,6 +55,13 @@ iris %>%
 
 ```{r q2-solution}
 ## TODO: Re-write the code above following the tidyverse style guide
+iris %>%
+  mutate(Sepal.Area=Sepal.Length*Sepal.Width) %>%
+  group_by(Species) %>%
+  summarize_if(is.numeric,mean) %>%
+  ungroup() %>%
+  pivot_longer(names_to="measure",values_to="value",cols=-Species) %>%
+  arrange(value)
 ```
 
 ### __q3__ Re-write according to the style guide
@@ -67,6 +76,13 @@ iris %>%
 
 ```{r q3-task}
 ## TODO: Re-write the code above following the tidyverse style guide
+iris %>%
+  group_by(Species) %>%
+  summarize(Sepal.Length = mean(Sepal.Length), 
+            Sepal.Width = mean(Sepal.Width), 
+            Petal.Length = mean(Petal.Length), 
+            Petal.Width = mean(Petal.Width)
+            )
 ```
 
 The following is an *addition* I'm making to the "effective styleguide" for the
@@ -121,15 +137,15 @@ free to write code however you like!
 *Hint*: Put the data first!
 
 ```{r q4-description}
-ggplot(
-  iris %>%
+iris %>%
+
   pivot_longer(
     names_to = c("Part", ".value"),
     names_sep = "\\.",
     cols = -Species
-  ),
-  aes(Width, Length, color = Part)
-) +
+  ) %>%
+  ggplot()+
+  aes(Width, Length, color = Part) +
   geom_point() +
   facet_wrap(~Species)
 ```
