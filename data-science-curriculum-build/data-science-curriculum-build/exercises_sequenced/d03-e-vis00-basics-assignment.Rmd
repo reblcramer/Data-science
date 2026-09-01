@@ -17,10 +17,12 @@ reading: 0
 library(tidyverse)
 # knitr options
 knitr::opts_chunk$set(echo = TRUE)
+?diamonds
 ```
 
 ### __q1__ Inspect a dataset
-
+{r load-packages, eval=FALSE}
+?diamonds
 Inspect the `diamonds` dataset. What do the `cut`, `color`, and `clarity` variables mean?
 
 *Hint*: We learned how to inspect a dataset in `e-data-00-basics`!
@@ -115,7 +117,12 @@ Adapt your code from q3 to visualize `price`, `carat`, and `cut` simultaneously.
 
 ```{r q4-task}
 ## TODO: Complete this code
-ggplot(diamonds)
+diamonds %>% 
+
+  # This is the focus of this code: Note the 
+  # additional `linewidth` argument to aes()
+  ggplot() +
+  geom_point(aes(x = carat, y = price, colour = cut ))
 ```
 
 **Observations**:
