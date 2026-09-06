@@ -28,8 +28,8 @@ library(tidyverse)
 Any time we store data in a computer, we need to work with *types*. A type is a system for representing a class of data inside our computer. Types are important because they can muck up our analysis. For instance, we obviously can't perform addition with the number 1 and the letter "a"
 
 ```{r}
-## No need to edit; uncomment and run
-# "a" + 1
+# No need to edit; uncomment and run
+"a" + 1
 ```
 
 However, we *can* "add" the letter "a" and the *string* "1":
@@ -69,7 +69,7 @@ One common issue is confusing a *string* with a *variable name*. This is further
 airport <- "BOS"
 
 ## Check our airport value
-airport == ATL
+airport == "ATL"
 ```
 
 **Observations**:
@@ -92,7 +92,7 @@ For example, sometimes our numerical data gets loaded as a string, in which case
 
 ```{r q2-task}
 v_string <- c("00", "45", "90")
-v_integer <- NA_real_
+v_integer <- as.integer(v_string)
 ```
 
 Use the following test to check your work.
