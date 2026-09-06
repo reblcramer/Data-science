@@ -63,8 +63,10 @@ Convert the following `geom_bar()` plot into the same visual using `geom_col()`.
 
 ```{r q1-task}
 mpg %>%
-  ggplot(aes(trans)) +
-  geom_bar()
+  count(trans)%>%
+  ggplot(aes(x=trans,y=n)) +
+  geom_col()
+
 ```
 
 ## Fundamentals of the bar chart
@@ -109,7 +111,7 @@ The following code attempts to visualize `cty, hwy` from `mpg` using `geom_col()
 ```{r q2-task}
 mpg %>%
   ggplot(aes(x = cty, y = hwy)) +
-  geom_col()
+  geom_col(position = "dodge")
 ```
 
 **Observations**:
@@ -254,7 +256,7 @@ The following graph is hard to read. Experiment with other choices of faceting t
 mpg %>%
   ggplot(aes(x = cyl)) +
   geom_bar() +
-  facet_grid(~ manufacturer)
+  facet_wrap(~ manufacturer)
 ```
 
 <!-- include-exit-ticket -->
