@@ -36,6 +36,7 @@ library(tidyverse)
 Remember from `e02-data-basics` there were *simple checks* we're supposed to do? Do those simple checks on the diamonds dataset below.
 
 ```{r q0-task}
+?diamonds
 ```
 
 I'm going to walk you through a train of thought I had when studying the diamonds dataset.
@@ -59,7 +60,7 @@ diamonds %>%
 ```
 
 **Observations**:
-- Write your observations here!
+- there are the highest number of ideal cut diamonds so your hypothesis was not correct 
 
 ## Hypothesis 2
 
@@ -79,7 +80,7 @@ diamonds %>%
 
 **Observations**:
 - Write your observations here!
-
+I cant tell from this graph if ideal cut diamonds cost the most, the graph doesnt include other factors or show clearly how many diamonds cost each amount 
 The following is a set of *boxplots*; the middle bar denotes the median, the boxes denote the *quartiles* (upper and lower "quarters" of the data), and the lines and dots denote large values and outliers.
 
 ### __q2.2__ Assess hypothesis 2
@@ -94,7 +95,7 @@ diamonds %>%
 
 **Observations**:
 - Write your observations here!
-
+this graph is much more useful but contradicts hypothesis 2 as ideal cut diamonds are typically less expensive than others
 ## Unraveling Hypothesis 2
 
 Upon making the graph in __q2.2__, I was very surprised. So I did some reading on diamond cuts. It turns out that some gemcutters [sacrifice cut for carat](https://en.wikipedia.org/wiki/Diamond_(gemstone)#Cut). Could this effect explain the surprising pattern above?
@@ -112,7 +113,7 @@ diamonds %>%
 ```
 
 **Observations**:
-- Write your observations here!
+- yes this plot supports the idea that cutters sacrifice carat for better cuts of diamond
 
 Note what we just did:
 
