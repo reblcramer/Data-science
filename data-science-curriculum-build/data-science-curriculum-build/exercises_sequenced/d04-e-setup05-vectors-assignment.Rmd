@@ -31,8 +31,8 @@ Create a vector with the numbers `1, 2, 3` below.
 
 ```{r q1-task}
 ## TODO: Assign the appropriate vector to vec_q1
+vec_q1<- c(1,2,3)
 
-vec_q1
 ```
 
 Use the following tests to check your work:
@@ -50,8 +50,7 @@ Did you know that you can use `c()` to *extend* a vector as well? Use this to ad
 
 ```{r q2-task}
 ## TODO: Assign the appropriate vector to vec_q2
-
-vec_q2
+vec_q2<- c(vec_q1,4)
 ```
 
 Use the following tests to check your work:
@@ -62,9 +61,3 @@ assertthat::assert_that(length(vec_q2) == 4)
 assertthat::assert_that(mean(vec_q2) == 2.5)
 print("Well done!")
 ```
-
-<!-- include-exit-ticket -->
-# Exit Ticket
-<!-- -------------------------------------------------- -->
-
-Once you have completed this exercise, make sure to fill out the **exit ticket survey**, [linked here](https://docs.google.com/forms/d/e/1FAIpQLSeuq2LFIwWcm05e8-JU84A3irdEL7JkXhMq5Xtoalib36LFHw/viewform?usp=pp_url&entry.693978880=e-setup05-vectors-assignment.Rmd).
