@@ -93,8 +93,8 @@ Here the bolded response is *actively* engaging with your colleague's question, 
 
 **Observations**:
 
-- Is the bolded response **active** or **passive**? Why?
-- Is the bolded response **constructive** or **destructive**? Why?
+- Is the bolded response **active** or **passive**? active, its enthusiastic and answers the question 
+- Is the bolded response **constructive** or **destructive**? constructive, instead of pointing blame at the question asker for not assuming what isn't there it compliments the asker for pointing out that the axes arent labled
 - How does this statement make you *feel*, relative to the bolded statement before the q1 prompt?
 
 ### __q2__ Identify the nature of the bolded line below, rating it as either **active vs passive** and **constructive vs destructive**.
@@ -107,9 +107,10 @@ Here the bolded response is *actively* engaging with your colleague's question, 
 
 **Observations**:
 
-- Is the bolded response **active** or **passive**? Why?
-- Is the bolded response **constructive** or **destructive**? Why?
+- Is the bolded response **active** or **passive**? Why? passive, seems less enthusiastic and moves on without ever actually answering the question
+- Is the bolded response **constructive** or **destructive**? Why? somewhat constructive doesnt put down collegue but ignores question
 - How does this statement make you *feel*, relative to the bolded statement before the q1 prompt?
+q1 prompt would definitely make me feel more like my question was valued than q2
 
 **Intermediate Conclusion**: We can quite naturally think of discussion responses in the APCD framework. Therefore, we should try to give active and constructive responses in data discussions!
 
