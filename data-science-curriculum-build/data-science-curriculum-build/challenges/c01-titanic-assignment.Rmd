@@ -52,11 +52,18 @@ df_titanic <- as_tibble(Titanic)
 
 ```{r q1-task}
 ## TASK: Perform a `glimpse` of df_titanic
+df_titanic
 ```
 
 **Observations**:
+shows all combinations of groupings of variables
 
 - (List all variables here)
+Class
+Sex
+Age
+Survived
+n: number people in each combination of groups
 
 ### __q2__ Skim the [Wikipedia article](https://en.wikipedia.org/wiki/RMS_Titanic) on the RMS Titanic, and look for a total count of souls aboard. Compare against the total computed below. Are there any differences? Are those differences large or small? What might account for those differences?
 
@@ -71,8 +78,10 @@ df_titanic %>% summarize(total = sum(n))
 - Write your observations here
 - Are there any differences?
   - (Your response here)
+  the count of passengers on wikipedia is 2208, 7 higher than the count in this dataset
 - If yes, what might account for those differences?
-  - (Your response here)
+  -  People who cancelled trips last minute were wrongfully included on the ships passenger list, and 
+  passengers who traveled under aliases may have been double counted.
   - ...
 
 ### __q3__ Create a plot showing the count of persons who *did* survive, along with aesthetics for `Class` and `Sex`. Document your observations below.
@@ -81,6 +90,9 @@ df_titanic %>% summarize(total = sum(n))
 
 ```{r q3-task}
 ## TASK: Visualize counts against `Class` and `Sex`
+df_titanic %>% filter(Survived=='Yes') %>%
+  ggplot(aes(x=Class,y=n,fill=Sex))+
+  geom_col(position='dodge')
 ```
 
 **Observations**:
@@ -110,7 +122,21 @@ df_prop
 
 ### __q4__ Replicate your visual from q3, but display `Prop` in place of `n`. Document your observations, and note any new/different observations you make in comparison with q3. Is there anything *fishy* in your plot?
 
+
 ```{r q4-task}
+
+df_prop %>% filter(Survived=='Yes') %>%
+  ggplot(aes(x=Class,y=Prop,fill=Sex))+
+  geom_col(position='dodge')+
+  facet_grid('Age')
+```
+```
+
+```
+```{r}
+df_prop %>% filter(Survived=='Yes') %>%
+  ggplot(aes(x=Class,y=Prop,fill=Sex))+
+  geom_col(position='dodge')
 ```
 
 **Observations**:
@@ -118,15 +144,22 @@ df_prop
 - Write your observations here.
 - Is there anything *fishy* going on in your plot?
   - (Your response here)
+  Removed 2 rows containing missing values or values outside the scale range (`geom_col()`).
+supposedly all first class passengers survived which according to the table is not true
 
 ### __q5__ Create a plot showing the group-proportion of occupants who *did* survive, along with aesthetics for `Class`, `Sex`, *and* `Age`. Document your observations below.
 
 *Hint*: Don't forget that you can use `facet_grid` to help consider additional variables!
-
-```{r q5-task}
+```{r}
+df_prop %>% filter(Survived=='Yes') %>%
+  ggplot(aes(x=Class,y=Prop,fill=Sex))+
+  geom_col(position='dodge')+
+  facet_grid('Age')
 ```
 
 **Observations**:
+
+It seems to plot overlapping values on top of eachother which caused the error in the previous graph. This graph correctly shows that only first and second class children had a 100% survival rate
 
 - (Write your observations here.)
 - If you saw something *fishy* in q4 above, use your new plot to explain the fishy-ness.
