@@ -98,34 +98,34 @@ document your observations.
 ``` r
 ## TODO: Complete this code
 diamonds %>% 
-  ggplot() +
-  geom_point(aes(x = carat, y = price))
+  ggplot(aes(x = carat, y = price)) +
+  geom_point()
 ```
 
 ![](c00-diamonds-assignment_files/figure-gfm/q1-task-1.png)<!-- -->
 
 **Observations**:
 
-- (Write your observations here!)
+- most diamonds are 0-3 carat, and theres a significant jump in the max
+  price of diamond above 1 carat
+- a lot of diamonds seem to fall on the whole number carat lines
 
 ### **q2** Create a visualization showing variables `carat`, `price`, and `cut` simultaneously. Experiment with which variable you assign to which aesthetic (`x`, `y`, etc.) to find an effective visual.
 
 ``` r
 diamonds %>% 
-  ggplot() +
-  geom_point(aes(x = carat, y = price, colour = cut))
+  ggplot(aes(x = carat, y = price, colour = cut)) +
+  geom_point()
 ```
 
 ![](c00-diamonds-assignment_files/figure-gfm/q2-task-1.png)<!-- -->
 
 **Observations**:
 
-only one of the graphs I could make with the 3 variables felt like it
-made sense. With the color dictated by the carat of diamond the color
-gradient was very subtle and since there are so few higher carat
-diamonds in the dataset most points were the same color blue. Using
-price as color was readable but definitely not as intuitive for me at
-least
+The fair cut diamonds cluster towards the bottom price range of the
+group of diamonds. There are ideal diamonds throughout but consistent
+ideal diamond clusters toward the high price range. The 3 highest carat
+diamonds are all fair cut.
 
 # Communication
 
@@ -176,3 +176,14 @@ assignment.
 If your team is on-deck, you are responsible for putting together a
 discussion of the challenge. I’ll demonstrate how to do this by leading
 the discussion of Challenge 0.
+
+``` r
+diamonds |> 
+  ggplot(mapping = aes(y = price, x = carat)) +
+  geom_point(aes(color = cut)) +
+  geom_smooth(method = "lm")
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](c00-diamonds-assignment_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
