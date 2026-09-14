@@ -29,6 +29,7 @@ Remember the pipe `%>%`? The pipe takes an input on the left, and "inserts" it i
 ### __q1__ A little refresher
 
 What is the difference between these two versions of code? How are they the same? How are they different?
+- they d
 
 ```{r q1-task}
 ## Version 1

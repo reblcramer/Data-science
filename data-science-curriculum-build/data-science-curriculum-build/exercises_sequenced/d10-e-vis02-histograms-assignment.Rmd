@@ -33,7 +33,12 @@ mpg %>%
   geom_bar()
 ```
 
+
 Some of the `displ` values only appear once, but they're very close to similar values. This can give a misleading impression of the data. A *histogram* first "bins" the data before counting up rows. This allows us to combine values that are nearby:
+```{r}
+mpg
+```
+
 
 ```{r}
 ## NOTE: No need to modify
@@ -51,7 +56,8 @@ Make a histogram of `cty` fuel economy.
 ```{r q1-task}
 ## TASK: Make a histogram of
 mpg %>%
-# TODO: Finish this code
+  ggplot(aes(cty)) +
+  geom_histogram(bins=20)
 ```
 
 ## The golden rule of histograms
@@ -162,7 +168,7 @@ diamonds %>%
   filter(carat < 1.1) %>%
 
   ggplot(aes(carat)) +
-  geom_histogram(binwidth = 0.01, boundary = 0.005) +
+  geom_histogram(binwidth = 0.05, boundary = 0.005) +
   scale_x_continuous(
     breaks = seq(0, 1, by = 0.1)
 
