@@ -69,7 +69,8 @@ In `R` we access a density by prefixing its name with the letter `d`.
 ```{r q1-task}
 ## TODO: Complete this code
 df_q1 <-
-  tibble(x = seq(-5, +5, length.out = 100))
+  tibble(x = seq(-1, +1, length.out = 100))%>%
+  mutate(d = dnorm(x, mean = 0, sd = 1))
 ```
 
 Use the following test to check your answer.

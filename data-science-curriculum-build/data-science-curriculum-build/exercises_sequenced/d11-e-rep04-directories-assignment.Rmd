@@ -80,6 +80,7 @@ Let's set you up for future success by creating a directory for your Project 1.
 replace `name` with something sensible. If you don't know what to call it yet,
 don't worry---you can change it later!
 
+
 ### __q2__ Create a `data` directory under `p01-name`; you should then have
 `p01-name/data`. This is where you will put any data files you read or write in the project.
 
