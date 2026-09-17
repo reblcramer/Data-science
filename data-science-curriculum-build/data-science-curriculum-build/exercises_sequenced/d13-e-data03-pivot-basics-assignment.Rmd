@@ -55,7 +55,7 @@ cases
 
 ```{r q1-test}
 ## TODO: Modify with your multiple choice number answer
-q1_answer <- 0
+q1_answer <- 2
 
 ## NOTE: The following will test your answer
 if (((q1_answer + 56) %% 3 == 1) & (q1_answer > 0)) {
@@ -87,7 +87,7 @@ alloys
 
 ```{r q2-test}
 ## TODO: Modify with your multiple choice number answer
-q2_answer <- 0
+q2_answer <- 3
 
 ## NOTE: The following will test your answer
 if (((q2_answer + 38) %% 3 == 2) & (q2_answer > 0)) {

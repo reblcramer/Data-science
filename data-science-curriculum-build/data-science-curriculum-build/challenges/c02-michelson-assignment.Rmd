@@ -76,6 +76,7 @@ df_michelson %>% glimpse()
 - `Velocity`: Measured speed of light (km / s)
 
 ### __q1__ Re-create the following table (from Michelson (1880), pg. 139) using `df_michelson` and `dplyr`. Note that your values *will not* match those of Michelson *exactly*; why might this be?
+- all values in the example table are rounded to the nearest 10
 
 | Distinctness | n  | MeanVelocity |
 |--------------|----|----------|
@@ -85,7 +86,9 @@ df_michelson %>% glimpse()
 
 ```{r q1-task}
 ## TODO: Compute summaries
-df_q1 <- NA
+df_q1 <- df_michelson%>%
+  group_by(Distinctness)%>%
+  summarise(n=n(),MeanVelocity=mean(Velocity))
 df_q1 %>%
   arrange(desc(Distinctness)) %>%
   knitr::kable()
@@ -93,9 +96,9 @@ df_q1 %>%
 
 **Observations**:
 - Write your observations here!
-  - (Your response here)
+  - While the rounded values of mean velocity in 2&3 distinctness samples is equal, the unrounded mean is slightly higher in 3 distinctness.
 - Why might your table differ from Michelson's?
-  - (Your response here)
+  - all values in Michelson's are rounded to the nearest 10
 
 The `Velocity` values in the dataset are the speed of light *in air*; Michelson
 introduced a couple of adjustments to estimate the speed of light in a vacuum.
@@ -108,8 +111,8 @@ observations in the dataset.
 
 ```{r q2-task}
 ## TODO: Adjust the data, assign to df_q2
-df_q2 <- NA
-
+df_michelson$VelocityVacuum<-df_michelson$Velocity + 92
+df_q2 <- df_michelson
 df_q2
 ```
 
@@ -137,13 +140,16 @@ problems uncertainty includes some amount of human judgment.[2]
 ```{r q3-task}
 ## TODO: Compare Michelson's estimate and error against the true value
 ## Your code here!
+err<-LIGHTSPEED_MICHELSON-LIGHTSPEED_VACUUM
+err
+err/LIGHTSPEED_PM
 ```
 
 **Observations**:
 - Is Michelson's estimate of the error (his uncertainty) greater or less than the true error?
-  - (Your response here)
+  - Michelson's error estimate is less than the true error
 - Make a quantitative comparison between Michelson's uncertainty and his error.
-  - (Your response here)
+  - Michelson's error was about 3 times greater than his uncertainty
 
 The following plot shows all of Michelson's data as a [control chart](https://en.wikipedia.org/wiki/Control_chart); this sort of plot is common in manufacturing, where it is used to help determine if a manufacturing process is under [statistical control](https://en.wikipedia.org/wiki/Statistical_process_control). Each dot is one of Michelson's measurements, and the grey line connects the mean taken for each day. The same plot also shows simulated data using a probability model. We'll get into statistics later in the course; for now, let's focus on understanding what real and simulated data tend to look like.
 
@@ -208,18 +214,60 @@ df_q2 %>%
 
 **Observations**:
 Similarities
-- (your responses here)
+- Dates of high and low peaks of the graphs are similar
 Differences
-- (your responses here)
+- The height of the peaks on the graphs is different. The simulated values are between the dotted lines more of the time than the real values.
 
 ### __q5__ You have access to a few other variables. Construct a **at least three** visualizations of `VelocityVacuum` against these other factors. Are there other patterns in the data that might help explain the difference between Michelson's estimate and `LIGHTSPEED_VACUUM`?
 
 **Observations**:
-
+I can't figure a pattern within the data that would help explain the difference between Michelson's estimate and LIGHTSPEED_VACUUM. It may be measurement error or a variable that wasn't measured at the time such as humidity 
 - Make sure to record observations on your graphs!
+```{r}
+df_michelson%>%
+  ggplot(aes(Temp, VelocityVacuum, color=Distinctness ))+
+  geom_point()+
+  geom_smooth() + 
+  geom_hline(
+    yintercept = LIGHTSPEED_MICHELSON,
+    linetype = "dashed"
+  ) + 
+  geom_hline(
+    yintercept = LIGHTSPEED_VACUUM,
+  )
+```
+```{r}
+df_michelson%>%
+  ggplot(aes(Temp, Velocity, color=Distinctness ))+
+  geom_point()+
+  geom_smooth() + 
+  geom_hline(
+    yintercept = LIGHTSPEED_MICHELSON,
+    linetype = "dashed"
+  ) + 
+  geom_hline(
+    yintercept = LIGHTSPEED_VACUUM,
+  )
+```
+```{r}
+df_michelson%>%
+  ggplot(aes(Date,VelocityVacuum))+
+  geom_point(aes(color=Temp)) + 
+  geom_hline(
+    yintercept = LIGHTSPEED_MICHELSON,
+    linetype = "dashed"
+  ) + 
+  geom_hline(
+    yintercept = LIGHTSPEED_VACUUM,
+  )
 
-
-
+```
+```{r}
+df_michelson%>%
+  ggplot()+
+  geom_point(aes(Date,Velocity, color = "In Air"))+
+  geom_point(aes(Date,VelocityVacuum, color="In Vacuum"))
+```
 ## Bibliography
 
 - [1] Michelson, [Experimental Determination of the Velocity of Light](https://play.google.com/books/reader?id=343nAAAAMAAJ&hl=en&pg=GBS.PA115) (1880)
