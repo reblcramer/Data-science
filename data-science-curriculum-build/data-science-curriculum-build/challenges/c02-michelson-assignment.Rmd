@@ -268,12 +268,6 @@ df_michelson%>%
   geom_point(aes(Date,Velocity, color = "In Air"))+
   geom_point(aes(Date,VelocityVacuum, color="In Vacuum"))
 ```
-```{r}
-df_michelson%>%
-  ggplot()+
-  geom_point(aes(Date,Velocity, color = "red"))+
-  geom_point(aes(Date,VelocityVacuum, color="blue"))
-```
 ## Bibliography
 
 - [1] Michelson, [Experimental Determination of the Velocity of Light](https://play.google.com/books/reader?id=343nAAAAMAAJ&hl=en&pg=GBS.PA115) (1880)
