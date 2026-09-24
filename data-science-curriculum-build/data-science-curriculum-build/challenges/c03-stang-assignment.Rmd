@@ -67,7 +67,14 @@ Note that these data are not tidy! The data in this form are convenient for repo
 ```{r q1-task}
 ## TASK: Tidy `df_stang`
 df_stang_long <-
-  df_stang
+  df_stang %>% pivot_longer(
+    values_drop_na = TRUE,
+    names_to = c(".value","angle"),
+    names_sep = "_",
+    cols = starts_with("E")| starts_with("nu"),
+    names_transform = list(angle = as.integer),
+  ) %>%
+  filter_out(E<0)
 
 df_stang_long
 ```
@@ -102,20 +109,22 @@ print("Very good!")
 ### __q2__ Perform a basic EDA on the aluminum data *without visualization*. Use your analysis to answer the questions under *observations* below. In addition, add your own *specific* question that you'd like to answer about the data---you'll answer it below in q3.
 
 ```{r q2-task}
-##
+## 
+glimpse(df_stang_long)
+summary(df_stang_long)
 ```
 
 **Observations**:
 
 - Is there "one true value" for the material properties of Aluminum?
-  - (Your response here)
+  - No the values are an average of experimental measurements.
 - How many aluminum alloys are in this dataset? How do you know?
-  - (Your response here)
+  - There is one aluminum alloy in this dataset. I know because the N.unique for alloys is 1.
 - What angles were tested?
-  - (Your response here)
+  - 0,45, and 90 degree angles were tested
 - What thicknesses were tested?
-  - (Your response here)
-- (Write your own question here)
+  - Thicknesses: .022, .032, .064, .081 inches
+- Does the angle impact elasticity.
 
 ## Visualize
 <!-- ------------------------- -->
@@ -124,11 +133,16 @@ print("Very good!")
 
 ```{r q3-task}
 ## TASK: Investigate your question from q1 here
+df_stang_long %>%
+
+  ggplot(aes(as_factor(angle), E))+
+  geom_boxplot()
+         
 ```
 
 **Observations**:
 
-- (Address your question from q1 here)
+- No the angle does not impact elasticity.
 
 ### __q4__ Consider the following statement:
 
@@ -148,9 +162,9 @@ df_stang_long %>%
 **Observations**:
 
 - Does this graph support or contradict the claim above?
-  - (Your response here)
+  - The E values are generally lower for thicker samples and higher for thinner samples which would contradict the claim.
 - Is this evidence *conclusive* one way or another?
-  - (Your response here)
+  - While the graph has a clear cluster of the thickest plates, the other points are not as clearly clustered. There are also not enough data points for this to be conclusive with so much overlap between each thickness.
 
 # References
 <!-- -------------------------------------------------- -->
