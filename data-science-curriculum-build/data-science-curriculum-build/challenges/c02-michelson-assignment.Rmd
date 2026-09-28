@@ -111,8 +111,9 @@ observations in the dataset.
 
 ```{r q2-task}
 ## TODO: Adjust the data, assign to df_q2
-df_michelson$VelocityVacuum<-df_michelson$Velocity + 92
-df_q2 <- df_michelson
+df_q2 <-
+  df_michelson %>%
+  mutate(VelocityVacuum = Velocity + 92)
 df_q2
 ```
 
@@ -226,47 +227,31 @@ I can't figure a pattern within the data that would help explain the difference 
 ```{r}
 df_michelson%>%
   ggplot(aes(Temp, VelocityVacuum, color=Distinctness ))+
-  geom_point()+
-  geom_smooth() + 
-  geom_hline(
-    yintercept = LIGHTSPEED_MICHELSON,
-    linetype = "dashed"
-  ) + 
-  geom_hline(
-    yintercept = LIGHTSPEED_VACUUM,
-  )
+  geom_point()
 ```
 ```{r}
 df_michelson%>%
   ggplot(aes(Temp, Velocity, color=Distinctness ))+
-  geom_point()+
-  geom_smooth() + 
-  geom_hline(
-    yintercept = LIGHTSPEED_MICHELSON,
-    linetype = "dashed"
-  ) + 
+  geom_point()+   
   geom_hline(
     yintercept = LIGHTSPEED_VACUUM,
   )
 ```
 ```{r}
 df_michelson%>%
-  ggplot(aes(Date,VelocityVacuum))+
-  geom_point(aes(color=Temp)) + 
-  geom_hline(
-    yintercept = LIGHTSPEED_MICHELSON,
-    linetype = "dashed"
-  ) + 
+  ggplot(aes(Temp,VelocityVacuum))+
+  geom_point() + 
   geom_hline(
     yintercept = LIGHTSPEED_VACUUM,
   )
 
 ```
+Michelson's velocity vacuum measurements increase as temperature increases, however all but 2 points are still above the true speed of light in a vacuum.
 ```{r}
 df_michelson%>%
   ggplot()+
-  geom_point(aes(Date,Velocity, color = "In Air"))+
-  geom_point(aes(Date,VelocityVacuum, color="In Vacuum"))
+  geom_point(aes(Temp,Velocity, color = "In Air"))+
+  geom_point(aes(Temp,VelocityVacuum, color="In Vacuum"))
 ```
 ## Bibliography
 
