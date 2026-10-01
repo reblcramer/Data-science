@@ -119,13 +119,23 @@ To make a readable graph I filtered out points over 90,000.
 
 ```{r q3-task}
 ## TASK: Identify the outliers from q2
-gapminder%>% filter(year==year_min, continent=='Africa') 
+
+
+cont<- c("Asia", "Africa", 'Europe','Americas', 'Oceania')
+for (x in conts) {
+ contGdp<-dfYrMin%>%filter(continent==x,year==year_min)
+ out<-boxplot.stats(contGdp$gdpPercap)$out
+ outInd <- which(contGdp$gdpPercap %in% c(out))
+ print(contGdp[outInd,c(1,6)])
+ 
+}
+
 ```
 
 **Observations**:
 
 - Identify the outlier countries from q2
-  - (Your response here)
+  - Bahrain, Kuwait, Angola, Gabon, South Africa, Switzerland, Canada, United States, Venezuela
 
 *Hint*: For the next task, it's helpful to know a ggplot trick we'll learn in an upcoming exercise: You can use the `data` argument inside any `geom_*` to modify the data that will be plotted *by that geom only*. For instance, you can use this trick to filter a set of points to label:
 
@@ -149,11 +159,22 @@ gapminder %>%
 
 ```{r q4-task}
 ## TASK: Create a visual of gdpPercap vs continent
+gapminder%>% filter(year==c(year_min,year_max))%>%
+ggplot(aes(continent,gdpPercap))+
+geom_boxplot()+
+  facet_grid('year')+
+  scale_y_continuous(trans = 'log10')+
+    geom_point(
+    data = . %>% filter(country %in% c('Bahrain', 'Kuwait', 'Angola', 'Gabon', 'South Africa', 'Switzerland', 'Canada', 'United States', 'Venezuela')),
+    mapping = aes(color = country),
+    size = 2
+  )
+
 ```
 
 **Observations**:
 
-- Write your observations here
+- There was only one new outlier in the 2007 graph, compared to the 1952 graph. Kuwait which was an extreme outlier in 1952 was much closer to the averages in 2007. 
 
 # Your Own EDA
 <!-- -------------------------------------------------- -->
@@ -164,20 +185,55 @@ Now it's your turn! We just went through guided EDA considering the GDP per capi
 
 ```{r q5-task1}
 ## TASK: Your first graph
+gapminder%>% filter(year==c(year_min,year_max))%>%
+ggplot(aes(continent,lifeExp))+
+geom_boxplot()+
+  facet_grid('year')
+cont<- c("Asia", "Africa", 'Europe','Americas', 'Oceania')
+for (x in conts) {
+ dfCont<-gapminder%>%filter(continent==x,year==year_min)
+ out<-boxplot.stats(dfCont$lifeExp)$out
+ outInd <- which(dfCont$lifeExp %in% c(out))
+ print(dfCont[outInd,c(1,4)])
+ 
+}
+
+for (x in conts) {
+ dfCont<-gapminder%>%filter(continent==x,year==year_min)
+ out<-boxplot.stats(dfCont$lifeExp)$out
+ outInd <- which(dfCont$lifeExp %in% c(out))
+ print(dfCont[outInd,c(1,4)])
+ 
+}
+  
 ```
 
 - (Your notes and observations here)
-
+Life expectancies for all continents have increased over time. Africa has a significantly lower life expectancy than any other continent in 2007, but was much closer to Asia and the Americas in 1952
 ```{r q5-task2}
 ## TASK: Your second graph
+gapminder%>% filter(year>=2000)%>%
+ggplot(aes(gdpPercap,lifeExp))+
+  geom_point()
 ```
 
-- (Your notes and observations here)
+q: Is life expectancy related to a country's GDP per capita?
+note: I decided to use data from 2000 onwards, because I know that both GDP per capita and life expectancy have been increasing over time 
+(Your notes and observations here)
+Life expectancy increases with a countries GDP although the rate of growth drops off sharply for a gdp higher than around 5000.
 
 ```{r q5-task3}
 ## TASK: Your third graph
+gapminder%>% filter(year>=2000)%>%
+ggplot(aes(pop,lifeExp))+
+  geom_point()+
+  scale_x_continuous(trans = 'log10')
+
+```
 ```
 
-- (Your notes and observations here)
+- q: does total population affect the life expectancy of a country
+(Your notes and observations here)
+Used log scale for x axis as a few outliers made the rest of the data overlap. There is no visible relationship between population and life expectancy. 
 
 
