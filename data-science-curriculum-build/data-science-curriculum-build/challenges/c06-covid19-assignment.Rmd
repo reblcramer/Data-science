@@ -79,7 +79,8 @@ That's the high-level view; now let's dig into the details.
 
 ```{r q1-task}
 ## TASK: Load the census bureau data with the following tibble name.
-df_pop <- NA
+
+df_pop <- read.csv("C:/Users/rcramer/Desktop/FA26/Data Science/GitHub/Data-science/Data-science/data-science-curriculum-build/data-science-curriculum-build/challenges/data/ACSDT5Y2018.B01003.csv",skip = 1)
 ```
 
 *Note*: You can find information on 1-year, 3-year, and 5-year estimates [here](https://www.census.gov/programs-surveys/acs/guidance/estimates.html). The punchline is that 5-year estimates are more reliable but less current.
@@ -95,7 +96,7 @@ The New York Times is publishing up-to-date data on COVID-19 on [GitHub](https:/
 
 ```{r q2-task}
 ## TASK: Find the URL for the NYT covid-19 county-level data
-url_counties <- NA_character_
+url_counties <-"https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"
 ```
 
 Once you have the url, the following code will download a local copy of the data, then load the data into R.
@@ -136,7 +137,9 @@ To join these datasets, we'll need to use [FIPS county codes](https://en.wikiped
 
 ```{r q3-task}
 ## TASK: Create a `fips` column by extracting the county code
-df_q3 <- NA
+
+df_q3 <- df_pop|> mutate(fips=str_sub(Geography,-5,-1))
+df_q3
 ```
 
 Use the following test to check your answer.
@@ -146,8 +149,8 @@ Use the following test to check your answer.
 ## Check known county
 assertthat::assert_that(
               (df_q3 %>%
-              filter(str_detect(`Geographic Area Name`, "Autauga County")) %>%
-              pull(fips)) == "01001"
+              filter(str_detect(`Geographic.Area.Name`, "Autauga County")) %>%
+              pull('fips')) == "01001"
             )
 print("Very good!")
 ```
@@ -156,7 +159,9 @@ print("Very good!")
 
 ```{r q4-task}
 ## TASK: Join df_covid and df_q3 by fips.
-df_q4 <- NA
+?join
+df_q4 <- left_join(df_covid,df_q3,join_by('fips'))
+
 ```
 
 Use the following test to check your answer.
@@ -203,7 +208,7 @@ df_data <-
     fips,
     cases,
     deaths,
-    population = `Estimate!!Total`
+    population = `Estimate..Total`
   )
 ```
 
@@ -220,7 +225,7 @@ Now that we've done the hard work of loading and wrangling the data, we can fina
 ```{r q5-task}
 ## TASK: Normalize cases and deaths
 df_normalized <-
-  df_data
+  df_data |> mutate(cases_per100k=cases/population*100000,deaths_per100k=deaths/population*100000)
 ```
 
 You may use the following test to check your work.
@@ -289,12 +294,13 @@ Compute the mean and standard deviation for `cases_per100k` and `deaths_per100k`
 
 ```{r q6-task}
 ## TASK: Compute mean and sd for cases_per100k and deaths_per100k
+mean(df_normalized$cases_per100k,na.rm = TRUE)
 ```
 
 - Which rows did you pick?
-  - (Your response here)
+  - (all rows except those with no data ('NA'))
 - Why?
-  - (Your response here)
+  - (cant compute the mean or standard deviation of missing data)
 
 ### __q7__ Find and compare the top 10
 
@@ -354,6 +360,10 @@ df_normalized %>%
     y = "Cases (per 100,000 persons)"
   )
 ```
+```{r}
+df_area <- 2026_
+```
+
 
 *Tricks*:
 

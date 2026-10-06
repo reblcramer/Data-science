@@ -99,9 +99,9 @@ You may encounter difficulties in visualizing these data; if so document your ch
 ```{r q2-task}
 ## TASK: Create a visual of gdpPercap vs continent
 gapminder%>% filter(year==year_min)%>%
-  filter_out(gdpPercap>90000)%>%
+  ##filter_out(gdpPercap>90000)%>%
 ggplot(aes(continent,gdpPercap))+
-geom_boxplot()
+geom_boxplot(outlier.shape = NA)
 ```
 
 **Observations**:
@@ -122,8 +122,8 @@ To make a readable graph I filtered out points over 90,000.
 
 
 cont<- c("Asia", "Africa", 'Europe','Americas', 'Oceania')
-for (x in conts) {
- contGdp<-dfYrMin%>%filter(continent==x,year==year_min)
+for (x in cont) {
+ contGdp<-gapminder%>%filter(continent==x,year==year_min)
  out<-boxplot.stats(contGdp$gdpPercap)$out
  outInd <- which(contGdp$gdpPercap %in% c(out))
  print(contGdp[outInd,c(1,6)])
@@ -190,21 +190,11 @@ ggplot(aes(continent,lifeExp))+
 geom_boxplot()+
   facet_grid('year')
 cont<- c("Asia", "Africa", 'Europe','Americas', 'Oceania')
-for (x in conts) {
- dfCont<-gapminder%>%filter(continent==x,year==year_min)
- out<-boxplot.stats(dfCont$lifeExp)$out
- outInd <- which(dfCont$lifeExp %in% c(out))
- print(dfCont[outInd,c(1,4)])
- 
-}
 
-for (x in conts) {
- dfCont<-gapminder%>%filter(continent==x,year==year_min)
- out<-boxplot.stats(dfCont$lifeExp)$out
- outInd <- which(dfCont$lifeExp %in% c(out))
- print(dfCont[outInd,c(1,4)])
+
+
  
-}
+
   
 ```
 
