@@ -76,6 +76,14 @@ In this visual you must show *all three* effectiveness values for *all 16 bacter
 
 ```{r q1.1}
 # WRITE YOUR CODE HERE
+summary(df_antibiotics)
+df_anbio<- df_antibiotics |> pivot_longer(cols = c(streptomycin,neomycin,penicillin),names_to = 'antibiotic', values_to = 'effectiveness')
+df_anbio
+df_anbio |> ggplot(aes(bacteria,effectiveness))+
+  geom_col(aes(colour = antibiotic),position = position_dodge())+
+  scale_y_log10()+
+  theme(axis.text.x=element_text(angle=45,hjust=1,vjust=0.5))
+
 ```
 
 #### Visual 2 (All variables)

@@ -308,7 +308,9 @@ Find the top 10 counties in terms of `cases_per100k`, and the top 10 in terms of
 
 ```{r q7-task}
 ## TASK: Find the top 10 max cases_per100k counties; report populations as well
+?max
 
+max(df_normalized$cases_per100k,na.rm = TRUE)
 ## TASK: Find the top 10 deaths_per100k counties; report populations as well
 ```
 
@@ -334,6 +336,37 @@ Find the top 10 counties in terms of `cases_per100k`, and the top 10 in terms of
 - Your own idea!
 
 **DO YOUR OWN ANALYSIS HERE**
+```{r}
+df_complete<-df_normalized |> drop_na()
+df_complete%>% ggplot(aes(population,cases_per100k))+
+  geom_point()+
+  scale_x_continuous(trans = 'log10')
+
+```
+```{r}
+df_areaRaw <- read.csv("C:/Users/rcramer/Desktop/FA26/Data Science/GitHub/Data-science/Data-science/data-science-curriculum-build/data-science-curriculum-build/challenges/data/LND01.csv")
+
+df_area <- df_areaRaw|> mutate(fips=as.character(STCOU), landArea=LND210200D, .keep = 'none')
+df_extra <- left_join(df_complete,df_area,join_by('fips'))
+df_extra <-df_extra |> drop_na()
+df_extra <- df_extra |> filter(landArea>0)
+df_extra<- df_extra |> mutate(popDens=population/landArea, fips=as.numeric(fips))
+df_extra |> arrange(deaths)
+quantile(df_extra$popDens)
+df_extra <- df_extra |> mutate(quantilegroup = ntile(popDens, 6))
+df_extra
+#
+df_extra |>
+  ggplot(aes(date, deaths/cases))+
+  geom_smooth()
+# df_extra |> filter(popDens>30000) |>
+#   ggplot(aes(date, cases_per100k))+
+#   geom_smooth()+
+#   coord_cartesian(ylim=c(0,28000))
+
+```
+
+
 
 ### Aside: Some visualization tricks
 <!-- ------------------------- -->
@@ -352,7 +385,7 @@ df_normalized %>%
     aes(date, cases_per100k, color = fct_reorder2(county, date, cases_per100k))
   ) +
   geom_line() +
-  scale_y_log10(labels = scales::label_number_si()) +
+  scale_y_log10() +
   scale_color_discrete(name = "County") +
   theme_minimal() +
   labs(
