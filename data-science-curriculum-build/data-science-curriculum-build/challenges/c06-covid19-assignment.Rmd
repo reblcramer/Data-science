@@ -337,10 +337,10 @@ max(df_normalized$cases_per100k,na.rm = TRUE)
 
 **DO YOUR OWN ANALYSIS HERE**
 ```{r}
-df_complete<-df_normalized |> drop_na()
-df_complete%>% ggplot(aes(population,cases_per100k))+
-  geom_point()+
-  scale_x_continuous(trans = 'log10')
+df_complete <-df_normalized |> drop_na()
+# df_complete%>% ggplot(aes(population,cases_per100k))+
+#   geom_point()+
+#   scale_x_continuous(trans = 'log10')
 
 ```
 ```{r}
@@ -353,12 +353,12 @@ df_extra <- df_extra |> filter(landArea>0)
 df_extra<- df_extra |> mutate(popDens=population/landArea, fips=as.numeric(fips))
 df_extra |> arrange(deaths)
 quantile(df_extra$popDens)
-df_extra <- df_extra |> mutate(quantilegroup = ntile(popDens, 6))
+df_extra <- df_extra |> mutate(quantilegroup = ntile(popDens, 4))
 df_extra
 #
-df_extra |>
-  ggplot(aes(date, deaths/cases))+
-  geom_smooth()
+# df_extra |>
+#   ggplot(aes(date, deaths/cases))+
+#   geom_smooth()
 # df_extra |> filter(popDens>30000) |>
 #   ggplot(aes(date, cases_per100k))+
 #   geom_smooth()+
@@ -394,9 +394,13 @@ df_normalized %>%
   )
 ```
 ```{r}
-df_area <- 2026_
+df_extra |> ggplot(aes(date,cases_per100k,color=as.factor(quantilegroup)))+
+  geom_point()
 ```
-
+```{r}
+df_extra |> ggplot(aes(date,cases_per100k,color=as.factor(quantilegroup)))+
+  geom_smooth()
+```
 
 *Tricks*:
 
