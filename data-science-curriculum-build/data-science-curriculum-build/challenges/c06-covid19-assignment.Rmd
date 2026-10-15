@@ -298,9 +298,9 @@ mean(df_normalized$cases_per100k,na.rm = TRUE)
 ```
 
 - Which rows did you pick?
-  - (all rows except those with no data ('NA'))
+  - I chose to use all rows except those with no data ('NA'))
 - Why?
-  - (cant compute the mean or standard deviation of missing data)
+  - Can't compute the mean or standard deviation of missing data.
 
 ### __q7__ Find and compare the top 10
 

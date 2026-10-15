@@ -80,9 +80,9 @@ summary(df_antibiotics)
 df_anbio<- df_antibiotics |> pivot_longer(cols = c(streptomycin,neomycin,penicillin),names_to = 'antibiotic', values_to = 'effectiveness')
 df_anbio
 df_anbio |> ggplot(aes(bacteria,effectiveness))+
-  geom_col(aes(colour = antibiotic),position = position_dodge())+
+  geom_col(aes(fill = antibiotic))+
   scale_y_log10()+
-  theme(axis.text.x=element_text(angle=45,hjust=1,vjust=0.5))
+  theme(axis.text.x=element_text(angle=-45,hjust=0,vjust=0.05))
 
 ```
 

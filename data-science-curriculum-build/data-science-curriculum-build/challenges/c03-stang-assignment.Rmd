@@ -112,6 +112,8 @@ print("Very good!")
 ## 
 glimpse(df_stang_long)
 summary(df_stang_long)
+?pull
+df_stang_long %>% pull(.data, var = 3) %>% unique
 ```
 
 **Observations**:
