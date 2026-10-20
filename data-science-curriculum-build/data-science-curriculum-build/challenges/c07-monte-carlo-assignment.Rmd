@@ -111,8 +111,8 @@ Pick a sample size $n$ and generate $n$ points *uniform randomly* in the square 
 
 ```{r q1-task}
 ## TASK: Choose a sample size and generate samples
-n <- NA_real_ # Choose a sample size
-df_q1 <- NA # Generate the data
+n <- 1000
+df_q1 <-tibble(x=runif(n, 0,1),y=runif(n,0,1))
 ```
 
 Use the following to check that you've used the correct variable names. (NB. This does not check correctness.)
@@ -148,7 +148,13 @@ Answer the questions below.
 ## TASK: Finish implementing this function
 stat <- function(x, y) {
   # TODO: Finish implementing this function
+   val<- sqrt(x^2+y^2)
+   stat = val<=1
+    replace_with<-4
+    stat[stat == TRUE] <- replace_with
+    return(stat)
 }
+stat(1,1)
 ```
 
 Implement your own assert statements. They should pass using your implementation of `stat()`, *but* they should also be *correct*.
@@ -158,20 +164,20 @@ Implement your own assert statements. They should pass using your implementation
 
 # Check the value for points *inside* the circle
 assertthat::assert_that(
-  # tibble(x = ?, y = ?) %>% # Pick a point *inside* the circle
+  tibble(x = .5, y = .5) %>% # Pick a point *inside* the circle
     mutate(stat = stat(x, y)) %>% 
     pull(stat) %>% 
-    .[[1]] ==
-  # ???, # Write the correct value of stat() here
+    .[[1]] == 4,
+  
   msg = "Incorrect value when a point is inside the circle"
 )
 
 # Check the value for points *outside* the circle
 assertthat::assert_that(
-  # tibble(x = ?, y = ?) %>% # Pick a point *outside* the circle
+  tibble(x = 1, y = 1) %>% # Pick a point *outside* the circle
     mutate(stat = stat(x, y)) %>% 
     pull(stat) %>% 
-    .[[1]] ==
+    .[[1]] == 0,
   # ???, # Write the correct value of stat() here
   msg = "Incorrect value when a point is outside the circle"
 )
@@ -181,9 +187,10 @@ print("Your assertions passed, but make sure they're checking the right thing!")
 *Observations*
 
 - You chose a correct value of `stat(x, y)` when `x, y` is *outside* the circle. Why did you choose this value?
-  - (Justify your value here)
+  - I chose 0 as that allows points outside of the circle to not contribute to calculation focused on points in the circle.
 - You chose a correct value of `stat(x, y)` when `x, y` is *inside* the circle. Why did you choose this value?
   - (Justify your value here)
+  I chose 4 as the ratio of the area inside the circle to the total area is pi/4. Setting points equal to 1 would be the equivalent of counting points in the circle and dividing by the total points which is equal to pi/4. To estimate pi all points must be multiplied by 4.
 
 ### __q3__ Estimate $\pi$
 
@@ -191,10 +198,14 @@ Using your data in `df_q1`, estimate $\pi$.
 
 ```{r q3-task}
 ## TASK: Estimate pi using your data from q1
-df_q3 <- 
+df_q3 <-
   df_q1 %>% 
   # TODO: Estimate pi as the column `pi_est`
-df_q3
+  mutate(val=stat(x,y)) %>%
+  pull(val)%>%
+  mean()%>%
+  tibble(pi_est=.)
+
 ```
 
 Use the following to check that you've used the correct variable names. (NB. This does not check correctness.)
@@ -234,9 +245,10 @@ df_q4 <-
       splits,
       function(split_df) {
         analysis(split_df) %>% 
-          # Estimate pi (pi_est) using the resampled data;
-          # this should be *identical* to the
-          # code you wrote for q3
+          mutate(val=stat(x,y)) %>%
+          pull(val)%>%
+          mean() %>%
+          tibble(pi_est=.)%>%
           pull(pi_est)
       }
     )
@@ -252,6 +264,7 @@ df_q4 %>%
 
 - What is a range of plausible values, based on the sampling distribution you've generated?
   - (Your response here)
+  The sampling distribution generated ranges from 3.11 to 3.16, but the vast majority of points are between 3.13 and 3.15 so the value is likely in that smaller range.
 
 ### __q5__ Bootstrap percentile confidence interval
 
@@ -261,14 +274,15 @@ Compute a bootstrap confidence interval for $\pi$ at the 95% confidence level (`
 
 ```{r}
 ## TASK: Compute a bootstrap confidence interval at the 95% level (alpha = 0.05)
+df_q4
 df_q5 <- 
   df_q4 %>% 
   summarize(
     # TODO: Compute pi_lo and pi_up
-    # pi_lo = ?
-    # pi_up = ?
+    pi_lo = quantile(pi_est,probs=c(.025)),
+    pi_up = quantile(pi_est,probs=c(.975))
   )
-
+quantile(df_q4$pi_est)
 df_q5
 ```
 
@@ -281,21 +295,33 @@ Compute a CLT-based confidence interval for $\pi$ at the 95% confidence level (`
 *Hint 2*: You have computed the same thing (a 95% confidence interval) in both q5 and q6. If they disagree strongly, that suggests that you've done something *wrong* in one of the tasks....
 
 ```{r q6-task}
-df_q1 %>%
+
+df_q6<-df_q1 %>% 
+  mutate(val=stat(x,y))%>%
+  summarize(
+    # TODO: Compute pi_lo and pi_up
+    pi_lo = mean(val)+qnorm(.025)*sd(val)/sqrt(n),
+    pi_up = mean(val)+qnorm(.975)*sd(val)/sqrt(n)
+  )
+
+df_q6
+
 ```
 
 **Observations**:
 
 - Does your intervals include the true value of $\pi$?
-  - (Bootstrap CI: yes or no?)
-  - (CLT CI: yes or no?)
+  - (Bootstrap CI: yes or no?) yes
+  - (CLT CI: yes or no?) yes
 - How closely do your bootstrap CI and CLT CI agree?
-  - (Your answer here)
+  - My bootstrap and CLT confidence intervals are within 3 ten-thousandths of each other for both the upper and lower bound.
 - Comment on the width of your CI(s). Would your estimate of $\pi$ be good enough for roughly estimating an area (e.g., to buy enough paint for an art project)? Would your estimate of $\pi$ be good enough for precisely calculating a trajectory (e.g., sending a rocket into orbit)?
   - (Good enough as a rough estimate?)
+  My estimate is definitely close enough for buying paint. I don't think there is ever a time that I would need a more precise number than 3.1 for estimating area. In calculating paint needed to repaint the interior of our house last year we were able to finish painting with no more than 1 significant digit on any number used and less than 2 buckets of any color left over.
   - (Good enough as a precise estimate?)
+  NASA uses 15 digits of pi in calculations, so my estimate would not be close enough for a precise trajectory. 
 - What would be a *valid* way to make your CI more narrow?
-  - (Your answer here)
+  - I could increase the number of points. A little unsure what stipulations for valid are.
 
 # References
 <!-- -------------------------------------------------- -->
