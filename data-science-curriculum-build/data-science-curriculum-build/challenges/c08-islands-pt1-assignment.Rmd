@@ -97,7 +97,7 @@ Make sure to include in `df_q3` the counts as a column named `n`, and the preval
 ```{r q3-task}
 ## TASK: Compute the prevalence and sort
 df_q3 <- 
-  df_sample_seq %>% 
+  df_sample_seq %>%
 ## TODO: Complete this code
 
 df_q3
